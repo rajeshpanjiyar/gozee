@@ -57,7 +57,7 @@ const Footer = () => {
                       <img
                         src={img}
                         className="img-fluid"
-                        style={{ height: "80px", width: "80px" }}
+                        style={{ height: "80px", width: "80px", borderRadius: "50%", padding: "3px", background: "#c2a3fd" }}
                         alt="logo"
                       />
                       <h3 style={{ color: "#c2a3fd", fontFamily: "Barrio" }}>
@@ -169,7 +169,7 @@ const Footer = () => {
               <div className="col-xl-6 col-lg-6 text-center text-lg-left">
                 <div className="copyright-text">
                   <p>
-                    Copyright &copy; 2023, All Right Reserved by
+                    Copyright &copy; 2023, All Right Reserved by&nbsp;
                     <a href="#">GoZee</a>
                   </p>
                 </div>

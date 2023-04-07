@@ -35,7 +35,7 @@ const Contact = () => {
         {" "}
         <h2
           style={{
-            color: "white",
+            color: "black",
             marginBottom: "2rem",
             display: "block",
             fontWeight: "700",

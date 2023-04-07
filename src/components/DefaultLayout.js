@@ -73,7 +73,7 @@ function DefaultLayout(props) {
             </div>
           </Link>
           <Dropdown overlay={menu} placement="bottomCenter">
-            <Button>{user.username}</Button>
+            <Button style={{borderRadius: "50%", marginRight: "10px"}}>{user.username}</Button>
           </Dropdown>
           {/* <button>user</button> */}
         </div>

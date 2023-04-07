@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Divider, DatePicker, Checkbox, Modal } from "antd";
+import { Row, Col, Divider, DatePicker, Checkbox, Modal, message } from "antd";
 import {
   DollarCircleOutlined,
   TagsOutlined,
@@ -15,6 +15,8 @@ import Spinner from "../components/Spinner";
 import moment from "moment";
 import { bookCar } from "../redux/actions/bookingActions";
 import Footer from "./Footer";
+import useShareableState from "../../../gozee/src/utils/useSharableState";
+import { useBetween } from "use-between";
 const { RangePicker } = DatePicker;
 
 function BookingCar() {
@@ -23,13 +25,24 @@ function BookingCar() {
   const { loading } = useSelector((state) => state.alertsReducer);
   const [car, setcar] = useState({});
   const dispatch = useDispatch();
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState();
-  const [totalMins, setTotalmins] = useState(0);
-  const [driver, setdriver] = useState(false);
+  // const [from, setFrom] = useState();
+  // const [to, setTo] = useState();
+  // const [totalMins, setTotalMins] = useState(0);
+  const {
+    from,
+    setFrom,
+    to,
+    setTo,
+    totalMins,
+    setTotalMins,
+    totalAmount,
+    setTotalAmount,
+  } = useBetween(useShareableState);
+
+  const [driver, setdriver] = useState(true);
   let onsitePay = true;
-  const [totalAmount, setTotalAmount] = useState(0);
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     if (cars.length == 0) {
       dispatch(getAllCars());
@@ -37,35 +50,102 @@ function BookingCar() {
     } else {
       setcar(cars.find((o) => o._id == id));
       window.scrollTo({ top: 0, behavior: "smooth" });
+      setTotalAmount(
+        Number(Math.ceil((totalMins * 1.0) / 60) * car.rentPerHour)
+      );
+      setdriver(false);
     }
   }, [cars]);
+
   useEffect(() => {
-    setTotalAmount(Number(Math.ceil((totalMins*1.0 / 60)) * car.rentPerHour));
+    setTotalAmount(Number(Math.ceil((totalMins * 1.0) / 60) * car.rentPerHour));
     if (driver) {
-      setTotalAmount(Number(totalAmount + 50 * Math.ceil(totalMins * 1.0 / 60))); // driver charge is Rs:50 per hour
+      setTotalAmount(
+        Number(totalAmount + 50 * Math.ceil((totalMins * 1.0) / 60))
+      ); // driver charge is Rs:50 per hour
     }
-  }, [driver, totalMins]);
-  function selectTimeSlots(values) {
-    if (values) {
-      setFrom(moment(values[0]).format("MMM DD yyyy HH"));
-      setTo(moment(values[1]).format("MMM DD yyyy HH"));
-      setTotalmins(values[1].diff(values[0], "minutes"));
-    } else {
-      setTotalmins(0);
-    }
-  }
-  function hasMinimumFourHours(){
-    if(Number(Math.ceil((totalMins*1.0 / 60))) < 4){
+  }, [cars, driver, totalMins]);
+
+  function hasMinimumFourHours() {
+    if (Number(Math.ceil((totalMins * 1.0) / 60)) < 4) {
       return false;
     }
-    return true
+    return true;
   }
-  function showMinimumFourHoursError(){
+  function showMinimumFourHoursError() {
     Modal.error({
       title: "Can't book",
       content: "Minimum booking time is 4 hours",
     });
   }
+
+  function setFilter(values) {
+    if (values) {
+      if (values.length > 1) {
+        var selectedFrom = moment(new Date(values[0]._d)).format(
+          "MMM DD yyyy HH:mm"
+        );
+        var selectedTo = moment(new Date(values[1]._d)).format(
+          "MMM DD yyyy HH:mm"
+        );
+        var temp = [];
+        var filterCars = [];
+
+        if (car.bookedTimeSlots.length == 0) {
+          temp.push(car);
+        } else {
+          for (var booking of car.bookedTimeSlots) {
+            if (
+              moment(values[0]._d).isBetween(
+                booking.from,
+                booking.to,
+                undefined,
+                "[]"
+              ) ||
+              moment(values[1]._d).isBetween(
+                booking.from,
+                booking.to,
+                undefined,
+                "[]"
+              ) ||
+              moment(booking.from).isBetween(
+                selectedFrom,
+                selectedTo,
+                undefined,
+                "[]"
+              ) ||
+              moment(booking.to).isBetween(
+                selectedFrom,
+                selectedTo,
+                undefined,
+                "[]"
+              )
+            ) {
+              filterCars.push(car);
+            } else {
+              temp.push(car);
+            }
+          }
+        }
+
+        temp = [...new Set(temp)];
+        temp =
+          filterCars?.length > 0
+            ? temp.filter((item) => !filterCars.includes(item)) //filtering the booked cars.....
+            : temp;
+        if (temp.length == 0) {
+          message.info("Please select free slots!");
+        } else {
+          setFrom(moment(values[0]).format("MMM DD yyyy HH"));
+          setTo(moment(values[1]).format("MMM DD yyyy HH"));
+          setTotalMins(values[1].diff(values[0], "minutes"));
+        }
+      }
+    } else {
+      setTotalMins(0);
+    }
+  }
+
   function onToken(token) {
     const reqObj = {
       token,
@@ -80,10 +160,10 @@ function BookingCar() {
         to,
       },
     };
-    if(hasMinimumFourHours() === true){ 
-    dispatch(bookCar(reqObj));
-    }else{
-      showMinimumFourHoursError()
+    if (hasMinimumFourHours() === true) {
+      dispatch(bookCar(reqObj));
+    } else {
+      showMinimumFourHoursError();
     }
   }
 
@@ -106,11 +186,11 @@ function BookingCar() {
         >
           <div
             style={{
-              // backgroundColor: "#24ffffc9",
-              backgroundColor: "#28d8d8",
+              backgroundColor: "white",
               borderRadius: "10px",
-              // maxHeight: "400px",
               width: "90%",
+              marginTop: "30px",
+              marginBottom: "30px",
             }}
           >
             <Divider>
@@ -185,17 +265,11 @@ function BookingCar() {
                 className="RangePicker"
                 showTime={{ format: "HH:mm a" }}
                 format="MMM DD yyyy HH:mm"
-                onChange={selectTimeSlots}
+                onChange={setFilter}
               />
               <br />
               <button
-                className="btn1 mt-2 mb-2"
-                style={{
-                  marginBottom: "4px",
-                  borderRadius: "5px",
-                  outline: "none",
-                  border: "none",
-                }}
+                className="btn2 mt-2 mb-2"
                 onClick={() => {
                   setShowModal(true);
                 }}
@@ -209,7 +283,7 @@ function BookingCar() {
                     flexDirection: "column",
                     alignItems: "end",
                     marginRight: "56px",
-                    color: "white",
+                    color: "black",
                   }}
                 >
                   <p>
@@ -224,49 +298,45 @@ function BookingCar() {
                       }
                     }}
                   >
-                    <span style={{ color: "white" }}> Driver Required</span>
+                    <span style={{ color: "black" }}> Driver Required</span>
                   </Checkbox>
-                  <h3 style={{ color: "white" }}>
+                  <h3 style={{ color: "black" }}>
                     Total Amount : {totalAmount}
                   </h3>
-
-                  <StripeCheckout
-                    token={onToken}
-                    shippingAddress
-                    billingAddress={true}
-                    disabled = {!hasMinimumFourHours()}
-                    currency={process.env.REACT_APP_CURRENCY}
-                    amount={Number(totalAmount)*100}
-                    stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
-                  >
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <StripeCheckout
+                      token={onToken}
+                      shippingAddress
+                      billingAddress={true}
+                      disabled={!hasMinimumFourHours()}
+                      currency={process.env.REACT_APP_CURRENCY}
+                      amount={Number(totalAmount) * 100}
+                      stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
+                    >
+                      <button
+                        className="btn1"
+                        style={{ width: "100px" }}
+                        onClick={() => {
+                          if (!hasMinimumFourHours()) {
+                            showMinimumFourHoursError();
+                          }
+                          onsitePay = false;
+                        }}
+                      >
+                        Pay Now
+                      </button>
+                    </StripeCheckout>
                     <button
                       className="btn1"
-                      onClick = {()=>{
-                        if(!hasMinimumFourHours()){
-                          showMinimumFourHoursError();
-                        }
-                       onsitePay = false; 
-                      }}
-                      style={{
-                        marginBottom: "4px",
-                        borderRadius: "5px",
-                        fontWeight: "500",
-                        outline: "none",
-                        border: "none",
+                      style={{ marginBottom: "20px", width: "100px" }}
+                      onClick={() => {
+                        onsitePay = true;
+                        onToken();
                       }}
                     >
-                      Pay Now
+                      Pay On Site
                     </button>
-                  </StripeCheckout>
-                  <button
-                    className="btn1"
-                    onClick={() => {
-                      onsitePay = true;
-                      onToken();
-                    }}
-                  >
-                    Pay On Site
-                  </button>
+                  </div>
                 </div>
               )}
             </div>

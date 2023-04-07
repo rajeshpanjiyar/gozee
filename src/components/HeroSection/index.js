@@ -43,8 +43,8 @@ const HeroSection = () => {
             onMouseEnter={onHover}
             onMouseLeave={onHover}
             onClick={() => {
-              window.scrollTo({ top: 570, behavior: "smooth" });
-              message.info("Now check available Cars!")
+              window.scrollTo({ top: 730, behavior: "smooth" });
+              message.info("Check cars availability!")
             }}
           >
             Book Now {hover ? <ArrowForward /> : <ArrowRight />}

@@ -65,7 +65,7 @@ function AdminHome() {
 
                   <div className="car-content d-flex align-items-center justify-content-between">
                     <div className="text-left pl-2">
-                      <p><b>{car.name}</b></p>
+                      <p><b>{car.name} ({car.carType === 0 ? "Non-A/C" : "A/C"})</b></p>
                       <p><b> Rent per Hour: {car.rentPerHour} </b>/-</p>
                     </div>
 

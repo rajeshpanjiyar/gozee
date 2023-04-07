@@ -5,8 +5,9 @@ export const getAllCars = () => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    const response = await axios.get(
-      "http://localhost:4000/api/cars/getallcars"
+    const user = JSON.parse(localStorage.getItem("user"));
+    const response = await axios.post(
+      "http://localhost:4000/api/cars/getallcars", {user:user}
     );
     dispatch({ type: "GET_ALL_CARS", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
@@ -15,6 +16,21 @@ export const getAllCars = () => async (dispatch) => {
     dispatch({ type: "LOADING", payload: false });
   }
 };
+
+export const getAllCarsInSearch = () => async(dispatch) => {
+  dispatch({ type: "LOADING", payload: true });
+
+  try {
+    const response = await axios.get(
+      "http://localhost:4000/api/cars/getallcarsinsearch"
+    );
+    dispatch({ type: "GET_ALL_CARS_IN_SEARCH", payload: response.data });
+    dispatch({ type: "LOADING", payload: false });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "LOADING", payload: false });
+  }
+}
 
 export const addCar = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });

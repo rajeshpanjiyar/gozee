@@ -11,6 +11,13 @@ export const carsReducer = (state = initialData, action) => {
       };
     }
 
+    case "GET_ALL_CARS_IN_SEARCH": {
+      return {
+        ...state,
+        cars: action.payload,
+      };
+    }
+
     default:
       return state;
   }

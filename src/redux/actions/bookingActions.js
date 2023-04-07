@@ -24,9 +24,11 @@ export const getAllBookings = () => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    const response = await axios.get(
-      "http://localhost:4000/api/bookings/getallbookings"
+    const user = JSON.parse(localStorage.getItem("user"));
+    const response = await axios.post(
+      "http://localhost:4000/api/bookings/getallbookings", {user: user}
     );
+    console.log('booking', response);
     dispatch({ type: "GET_ALL_BOOKINGS", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {

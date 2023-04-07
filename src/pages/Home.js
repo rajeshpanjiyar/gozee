@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
-import { getAllCars } from "../redux/actions/carsAction";
-import { Row, Col, Divider, DatePicker, Checkbox } from "antd";
+import { getAllCarsInSearch } from "../redux/actions/carsAction";
+import { Row, Col, message, DatePicker, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import moment from "moment";
@@ -10,27 +10,31 @@ import Footer from "./Footer";
 import HeroSection from "../components/HeroSection";
 import Services from "../components/Services";
 import Map from "../components/Map";
+import { useBetween } from "use-between";
+import useShareableState from "../../../gozee/src/utils/useSharableState";
+
 const { RangePicker } = DatePicker;
 
 function Home() {
   const { cars } = useSelector((state) => state.carsReducer);
   const { loading } = useSelector((state) => state.alertsReducer);
   const [totalCars, setTotalcars] = useState([]);
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState();
+  const { from, setFrom, to, setTo, setTotalMins } =
+    useBetween(useShareableState);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllCars());
+    dispatch(getAllCarsInSearch());
   }, []);
   useEffect(() => {
     setTotalcars(cars);
   }, [cars]);
+
   function setFilter(values) {
     if (values) {
       if (values.length > 1) {
-        
         setFrom(moment(values[0]).format("MMM DD yyyy HH"));
         setTo(moment(values[1]).format("MMM DD yyyy HH"));
+        setTotalMins(values[1].diff(values[0], "minutes"));
         var selectedFrom = moment(new Date(values[0]._d)).format(
           "MMM DD yyyy HH:mm"
         );
@@ -77,18 +81,18 @@ function Home() {
             }
           }
         }
-      } else {
-        var temp = cars;
+        temp = [...new Set(temp)];
+        temp =
+          filterCars?.length > 0
+            ? temp.filter((item) => !filterCars.includes(item)) //filtering the booked cars.....
+            : temp;
+        if (temp.length === 0) {
+          message.info('Please select free slots!');
+        } else {
+          setTotalcars(temp);
+        }
       }
-    } else {
-      var temp = cars;
     }
-    var temp = [...new Set(temp)];
-    temp =
-      filterCars?.length > 0
-        ? temp.filter((item) => !filterCars.includes(item)) //filtering the booked cars.....
-        : temp;
-    setTotalcars(temp);
   }
   return (
     <DefaultLayout>
@@ -122,7 +126,7 @@ function Home() {
                     <div className="car-content d-flex align-items-center justify-content-between">
                       <div>
                         <p style={{ fontWeight: "bold", color: "#222f35 " }}>
-                          {car.name}({car.carType===0?"Non-A/C":"A/C"})
+                          {car.name}({car.carType === 0 ? "Non-A/C" : "A/C"})
                         </p>
                         <p style={{ color: "#222f35" }}>
                           Rs:{car.rentPerHour} Per Hour /-
