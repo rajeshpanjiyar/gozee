@@ -34,7 +34,7 @@ function AdminHome() {
                 Admin Panel
               </h3>
               <button className="btnAdd">
-                <a href="/addcar">ADD CAR</a>
+                <a href="/addcar" style = {{color: '#896deb' }}>ADD CAR</a>
               </button>
             </div>
           </Col>
