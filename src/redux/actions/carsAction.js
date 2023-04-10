@@ -7,7 +7,8 @@ export const getAllCars = () => async (dispatch) => {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     const response = await axios.post(
-      "https://gozee.vercel.app/api/cars/getallcars", {user:user}
+      "https://gozee.vercel.app/api/cars/getallcars",
+      { user: user }
     );
     dispatch({ type: "GET_ALL_CARS", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
@@ -17,7 +18,7 @@ export const getAllCars = () => async (dispatch) => {
   }
 };
 
-export const getAllCarsInSearch = () => async(dispatch) => {
+export const getAllCarsInSearch = () => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
@@ -30,22 +31,22 @@ export const getAllCarsInSearch = () => async(dispatch) => {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
   }
-}
+};
 
 export const addCar = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    await axios.post(
-      "https://gozee.vercel.app/api/cars/addcar",
-      reqObj
-    );
+    const user = JSON.parse(localStorage.getItem("user"));
+    reqObj.owner = user._id;
+    console.log("adding car-b", reqObj);
+    await axios.post("https://gozee.vercel.app/api/cars/addcar", reqObj);
 
     dispatch({ type: "LOADING", payload: false });
     message.success("New car added successfully");
     setTimeout(() => {
       window.location.href = "/admin";
-    }, 500);
+    }, 200);
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
@@ -56,16 +57,13 @@ export const editCar = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    await axios.put(
-      "https://gozee.vercel.app/api/cars/editcar",
-      reqObj
-    );
+    await axios.put("https://gozee.vercel.app/api/cars/editcar", reqObj);
 
     dispatch({ type: "LOADING", payload: false });
     message.success("Car details updated successfully");
     setTimeout(() => {
       window.location.href = "/admin";
-    }, 500);
+    }, 200);
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
@@ -76,16 +74,13 @@ export const deleteCar = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-    await axios.post(
-      "https://gozee.vercel.app/api/cars/deletecar",
-      reqObj
-    );
+    await axios.post("https://gozee.vercel.app/api/cars/deletecar", reqObj);
 
     dispatch({ type: "LOADING", payload: false });
     message.success("Car deleted successfully");
     setTimeout(() => {
       window.location.reload();
-    }, 500);
+    }, 200);
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });

@@ -12,8 +12,6 @@ function AddCar() {
 
   function onFinish(values) {
     values.bookedTimeSlots = [];
-    const user = localStorage.getItem("user");
-    values.owner = user._id;
     dispatch(addCar(values));
   }
 

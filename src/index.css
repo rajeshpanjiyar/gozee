@@ -43,6 +43,7 @@ p {
 .header {
   padding: 2px;
   width: 100vw;
+  /* height: 100px; */
   margin-right: 0 !important;
   margin-top: 0 !important;
   background-color: #000000 !important;
