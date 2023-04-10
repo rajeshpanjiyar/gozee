@@ -7,7 +7,7 @@ export const getAllCars = () => async (dispatch) => {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     const response = await axios.post(
-      "http://localhost:4000/api/cars/getallcars", {user:user}
+      "https://gozee.vercel.app/api/cars/getallcars", {user:user}
     );
     dispatch({ type: "GET_ALL_CARS", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
@@ -22,7 +22,7 @@ export const getAllCarsInSearch = () => async(dispatch) => {
 
   try {
     const response = await axios.get(
-      "http://localhost:4000/api/cars/getallcarsinsearch"
+      "https://gozee.vercel.app/api/cars/getallcarsinsearch"
     );
     dispatch({ type: "GET_ALL_CARS_IN_SEARCH", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
@@ -37,7 +37,7 @@ export const addCar = (reqObj) => async (dispatch) => {
 
   try {
     await axios.post(
-      "http://localhost:4000/api/cars/addcar",
+      "https://gozee.vercel.app/api/cars/addcar",
       reqObj
     );
 
@@ -57,7 +57,7 @@ export const editCar = (reqObj) => async (dispatch) => {
 
   try {
     await axios.put(
-      "http://localhost:4000/api/cars/editcar",
+      "https://gozee.vercel.app/api/cars/editcar",
       reqObj
     );
 
@@ -77,7 +77,7 @@ export const deleteCar = (reqObj) => async (dispatch) => {
 
   try {
     await axios.post(
-      "http://localhost:4000/api/cars/deletecar",
+      "https://gozee.vercel.app/api/cars/deletecar",
       reqObj
     );
 

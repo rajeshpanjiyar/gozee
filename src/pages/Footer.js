@@ -67,9 +67,7 @@ const Footer = () => {
                   </div>
                   <div className="footer-text">
                     <p>
-                      Lorem ipsum dolor sit amet, consec tetur adipisicing elit,
-                      sed do eiusmod tempor incididuntut consec tetur
-                      adipisicing elit,Lorem ipsum dolor sit amet.
+                    Get on the Go with GoZee, the affordable way to travel!
                     </p>
                   </div>
                   <div className="footer-social-icon">
@@ -114,9 +112,6 @@ const Footer = () => {
                       <a href="#">services</a>
                     </li>
                     <li>
-                      <a href="#">portfolio</a>
-                    </li>
-                    <li>
                       <a href="/contact">Contact</a>
                     </li>
                     <li>
@@ -132,7 +127,7 @@ const Footer = () => {
                       <a href="/contact">Contact us</a>
                     </li>
                     <li>
-                      <a href="#">Latest News</a>
+                      <a href="#">Career</a>
                     </li>
                   </ul>
                 </div>

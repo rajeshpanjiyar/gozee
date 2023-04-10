@@ -26,10 +26,10 @@ const HeroSection = () => {
       </HeroBg>
       <HeroContent>
         <HeroH1>
-          <span style={{ color: "white" }}> Booking Cars Made Easy</span>
+          <span style={{ color: "white" }}> Unleash your wanderlust</span>
         </HeroH1>
         <HeroP>
-          Book your favourite car in very low price and enjoy the ride.
+        Get on the Go with GoZee, the affordable way to travel!
         </HeroP>
         <HeroBtnWrapper>
           <ButtonT

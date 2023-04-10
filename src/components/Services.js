@@ -27,9 +27,8 @@ const Services = () => {
                   <img src={Fast_Booking} alt="" className="icon-image" />
                 </i>
                 <h4>Fast & Easy Booking</h4>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p style = {{textAlign: 'justify'}}>
+                Effortlessly book your ride with just a few clicks - it's that simple.
                 </p>
               </div>
             </div>
@@ -40,9 +39,8 @@ const Services = () => {
                   <img src={Map} alt="" className="icon-image" />
                 </i>
                 <h4>Any Pickup Location</h4>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p style = {{textAlign: 'justify'}}>
+                Finding a convenient and safe pickup spot is crucial for a smooth and hassle-free experience.
                 </p>
               </div>
             </div>
@@ -53,9 +51,8 @@ const Services = () => {
                   <img src={Pay} alt="" className="icon-image" />
                 </i>
                 <h4>No Booking Charges</h4>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p style = {{textAlign: 'justify'}}>
+                Enjoy the peace of mind that comes with no hidden fees or extra charges on your bookings.
                 </p>
               </div>
             </div>
@@ -66,9 +63,8 @@ const Services = () => {
                   <img src={Collection} alt="" className="icon-image" />
                 </i>
                 <h4>Free Maintenance</h4>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p style = {{textAlign: 'justify'}}>
+                Keep your equipment running smoothly without breaking the bank with our free maintenance services. Schedule your appointment today!
                 </p>
               </div>
             </div>
@@ -79,9 +75,8 @@ const Services = () => {
                   <img src={Insurance} alt="" className="icon-image" />
                 </i>
                 <h4>Fully Insured</h4>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p style = {{textAlign: 'justify'}}>
+                Our expert technicians have the skills and experience to get the job done right the first time. Trust us for all your technical needs.
                 </p>
               </div>
             </div>
@@ -92,9 +87,8 @@ const Services = () => {
                   <img src={Support} alt="" className="icon-image" />
                 </i>
                 <h4>24/7 Support</h4>
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                <p style = {{textAlign: 'justify'}}>
+                Need assistance at any time of day? Our 24/7 support team is always available to provide fast and reliable help when you need it.
                 </p>
               </div>
             </div>

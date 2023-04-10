@@ -27,7 +27,7 @@ function AddCar() {
             sm={24}
             xs={24}
             className="p-2 mb-3"
-            style={{ backgroundColor: "#0d8585" }}
+            style={{ backgroundColor: "#896deb" }}
           >
             <Form className="bs1 p-1" layout="vertical" onFinish={onFinish}>
               <h3 style={{ color: "white" }}>Add New Car</h3>

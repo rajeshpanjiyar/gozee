@@ -2,16 +2,13 @@ import React from "react";
 import mark from "../images/icons/gps.png";
 import ReactMapGL, { Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-// import mapboxgl from "!mapbox-gl";
-// import MapboxWorker from "worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker";
-
-// mapboxgl.workerClass = MapboxWorker;
+;
 const Map = () => {
   const [viewport, setViewport] = React.useState({
     latitude: 22.2512,
     longitude: 84.9063,
-    // width: "100vw",
-    // height: "80vh",
+    width: "100vw",
+    height: "80vh",
     zoom: 14,
   });
   return (
@@ -28,14 +25,14 @@ const Map = () => {
       </h2>
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken="pk.eyJ1IjoibnVtYW5hbmVlcyIsImEiOiJja3kwMWExZmcwYTBuMnFxZGMwc2VtNngzIn0.AdcyN5u-Ab22UUFSYcaz8g"
+        mapboxApiAccessToken= "pk.eyJ1IjoibnVtYW5hbmVlcyIsImEiOiJja3kwMWExZmcwYTBuMnFxZGMwc2VtNngzIn0.AdcyN5u-Ab22UUFSYcaz8g"
         onViewportChange={(viewport) => setViewport(viewport)}
         mapStyle={"mapbox://styles/numananees/cky01qc5u382o14l5u46kvve1"}
       >
         <Marker latitude={22.2512} longitude={84.9063}>
           <div className="marker">
             <a
-              href="https://www.google.com/maps/place/Abrar+Center+wahdat+road+Muslim+town+lahore/@31.5192115,74.317498,17z/data=!4m5!3m4!1s0x391905d80a35cfb3:0x5e6fb4fe9f3d7055!8m2!3d31.5192555!4d74.3192881"
+              href="https://www.google.com/maps/place/National+Institute+of+Technology,+Rourkela/@22.2530706,84.8987868,17z/data=!3m1!4b1!4m6!3m5!1s0x3a201f72bbd561c3:0xab5c70e76a7b5a!8m2!3d22.2530656!4d84.9009808!16zL20vMGNnM2xr"
               target="_blank"
             >
               <img

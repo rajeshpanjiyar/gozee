@@ -25,9 +25,10 @@ function Home() {
   useEffect(() => {
     dispatch(getAllCarsInSearch());
   }, []);
-  useEffect(() => {
-    setTotalcars(cars);
-  }, [cars]);
+
+  // useEffect(() => {
+  //   setTotalcars(cars);
+  // }, [cars]);
 
   function setFilter(values) {
     if (values) {
@@ -87,7 +88,7 @@ function Home() {
             ? temp.filter((item) => !filterCars.includes(item)) //filtering the booked cars.....
             : temp;
         if (temp.length === 0) {
-          message.info('Please select free slots!');
+          message.info('No Cars available for selected time slot!');
         } else {
           setTotalcars(temp);
         }

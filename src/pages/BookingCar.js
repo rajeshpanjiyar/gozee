@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import StripeCheckout from "react-stripe-checkout";
 import DefaultLayout from "../components/DefaultLayout";
-import { getAllCars } from "../redux/actions/carsAction";
+import { getAllCarsInSearch } from "../redux/actions/carsAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
@@ -25,9 +25,6 @@ function BookingCar() {
   const { loading } = useSelector((state) => state.alertsReducer);
   const [car, setcar] = useState({});
   const dispatch = useDispatch();
-  // const [from, setFrom] = useState();
-  // const [to, setTo] = useState();
-  // const [totalMins, setTotalMins] = useState(0);
   const {
     from,
     setFrom,
@@ -45,7 +42,7 @@ function BookingCar() {
 
   useEffect(() => {
     if (cars.length == 0) {
-      dispatch(getAllCars());
+      dispatch(getAllCarsInSearch());
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       setcar(cars.find((o) => o._id == id));
@@ -55,7 +52,7 @@ function BookingCar() {
       );
       setdriver(false);
     }
-  }, [cars]);
+  }, [cars, id, totalMins]);
 
   useEffect(() => {
     setTotalAmount(Number(Math.ceil((totalMins * 1.0) / 60) * car.rentPerHour));
@@ -64,7 +61,7 @@ function BookingCar() {
         Number(totalAmount + 50 * Math.ceil((totalMins * 1.0) / 60))
       ); // driver charge is Rs:50 per hour
     }
-  }, [cars, driver, totalMins]);
+  }, [car, driver, totalMins]);
 
   function hasMinimumFourHours() {
     if (Number(Math.ceil((totalMins * 1.0) / 60)) < 4) {
@@ -133,7 +130,7 @@ function BookingCar() {
           filterCars?.length > 0
             ? temp.filter((item) => !filterCars.includes(item)) //filtering the booked cars.....
             : temp;
-        if (temp.length == 0) {
+        if (temp.length === 0) {
           message.info("Please select free slots!");
         } else {
           setFrom(moment(values[0]).format("MMM DD yyyy HH"));
