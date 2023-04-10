@@ -15,7 +15,7 @@ export const userLogin = (reqObj) => async (dispatch) => {
     dispatch({ type: "LOADING", payload: false });
     setTimeout(() => {
       window.location.href = "/";
-    }, 200);
+    }, 500);
   } catch (error) {
     console.log(error);
     message.error("Something went wrong");
@@ -34,7 +34,7 @@ export const userRegister = (reqObj) => async (dispatch) => {
     message.success("Registration successfull");
     setTimeout(() => {
       window.location.href = "/login";
-    }, 200);
+    }, 500);
 
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {

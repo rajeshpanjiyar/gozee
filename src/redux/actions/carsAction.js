@@ -46,7 +46,7 @@ export const addCar = (reqObj) => async (dispatch) => {
     message.success("New car added successfully");
     setTimeout(() => {
       window.location.href = "/admin";
-    }, 200);
+    }, 500);
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
@@ -63,7 +63,7 @@ export const editCar = (reqObj) => async (dispatch) => {
     message.success("Car details updated successfully");
     setTimeout(() => {
       window.location.href = "/admin";
-    }, 200);
+    }, 500);
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
@@ -80,7 +80,7 @@ export const deleteCar = (reqObj) => async (dispatch) => {
     message.success("Car deleted successfully");
     setTimeout(() => {
       window.location.reload();
-    }, 200);
+    }, 500);
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });

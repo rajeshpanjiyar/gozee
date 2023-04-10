@@ -13,7 +13,7 @@ export const bookCar = (reqObj) => async (dispatch) => {
     message.success("Your car booked successfully");
     setTimeout(() => {
       window.location.href = "/userbookings";
-    }, 200);
+    }, 500);
   } catch (error) {
     dispatch({ type: "LOADING", payload: false });
     message.error("Something went wrong , please try later");
