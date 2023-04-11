@@ -11,7 +11,8 @@ import HeroSection from "../components/HeroSection";
 import Services from "../components/Services";
 import Map from "../components/Map";
 import { useBetween } from "use-between";
-import useShareableState from "../../../gozee/src/utils/useSharableState";
+import useShareableState from "../utils/useSharableState";
+
 
 const { RangePicker } = DatePicker;
 

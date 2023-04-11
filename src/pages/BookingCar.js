@@ -15,8 +15,8 @@ import Spinner from "../components/Spinner";
 import moment from "moment";
 import { bookCar } from "../redux/actions/bookingActions";
 import Footer from "./Footer";
-import useShareableState from "../../../gozee/src/utils/useSharableState";
 import { useBetween } from "use-between";
+import useShareableState from "../utils/useSharableState";
 const { RangePicker } = DatePicker;
 
 function BookingCar() {
