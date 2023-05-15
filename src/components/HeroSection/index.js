@@ -26,7 +26,7 @@ const HeroSection = () => {
       </HeroBg>
       <HeroContent>
         <HeroH1>
-          <span style={{ color: "white" }}> Unleash your wanderlust</span>
+          <span style={{ color: "white" }}> Unleash Your Wanderlust</span>
         </HeroH1>
         <HeroP>
         Get on the Go with GoZee, the affordable way to travel!

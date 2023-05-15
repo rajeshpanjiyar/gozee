@@ -6,7 +6,7 @@ export const userLogin = (reqObj) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      "https://gozee.vercel.app/api/users/login",
+      "http://localhost:4000/api/users/login",
       reqObj
     );
     const { admin, username, _id } = response.data;
@@ -28,7 +28,7 @@ export const userRegister = (reqObj) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      "https://gozee.vercel.app/api/users/register",
+      "http://localhost:4000/api/users/register",
       reqObj
     );
     message.success("Registration successfull");

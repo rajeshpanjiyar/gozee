@@ -1,19 +1,61 @@
-import { Col, Row, Form, Input, Select } from "antd";
+import { Col, Row, Form, Input, Select, message } from "antd";
 import React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import Spinner from "../components/Spinner";
 import { addCar } from "../redux/actions/carsAction";
+import FormData from "form-data";
+import axios from "axios";
 const { Option } = Select;
 function AddCar() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alertsReducer);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [file, setFile] = useState(null);
+  var imageUrl = "";
 
-  function onFinish(values) {
-    values.bookedTimeSlots = [];
-    dispatch(addCar(values));
-  }
+  const getPhoto = (e) => {
+    let formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    setFile(formData);
+  };
+
+  const uploadPhoto = async () => {
+    const url = "http://localhost:4000/api/cars/addcarphoto";
+
+    await axios
+      .post(url, file)
+      .then(function (response) {
+        console.log(response);
+        imageUrl = response.data.secure_url;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const onFinish = async (values) => {
+    await uploadPhoto()
+      .then(function (res) {
+        values.bookedTimeSlots = [];
+        values.image = imageUrl;
+        imageUrl = "";
+        dispatch(addCar(values))
+          .then(function (response) {
+            message.success("New car added successfully!");
+            setTimeout(() => {
+              window.location.href = "/admin";
+            }, 500);
+          })
+          .catch(function (error) {
+            message.success("Something went wrong!");
+          });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <DefaultLayout>
@@ -42,22 +84,15 @@ function AddCar() {
                 label="Car Type"
                 rules={[{ required: true }]}
               >
-                <Select
-                  defaultValue="0"
-                  style={{ width: 220 }}
-                >
+                <Select defaultValue="0" style={{ width: 220 }}>
                   <Option value="0">Non-A/C</Option>
                   <Option value="1">A/C</Option>
                 </Select>
               </Form.Item>
-
-              <Form.Item
-                name="image"
-                label="Image url"
-                rules={[{ required: true }]}
-              >
-                <Input placeholder="Enter the image-url..." />
-              </Form.Item>
+              <div style = {{padding: "20px 0px"}}>
+              <p style = {{color: "white"}}>* Select Photo</p>
+              <input type="file" onChange={getPhoto} />
+              </div>
               <Form.Item
                 name="rentPerHour"
                 label="Rent per hour"
