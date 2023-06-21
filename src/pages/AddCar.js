@@ -8,6 +8,7 @@ import { addCar } from "../redux/actions/carsAction";
 import FormData from "form-data";
 import axios from "axios";
 const { Option } = Select;
+
 function AddCar() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alertsReducer);
@@ -22,12 +23,11 @@ function AddCar() {
   };
 
   const uploadPhoto = async () => {
-    const url = "http://localhost:4000/api/cars/addcarphoto";
+    const url = process.env.REACT_APP_BASE_URL + process.env.REACT_APP_UPLOAD_CAR_PHOTO;
 
     await axios
       .post(url, file)
       .then(function (response) {
-        console.log(response);
         imageUrl = response.data.secure_url;
       })
       .catch(function (error) {
@@ -36,25 +36,19 @@ function AddCar() {
   };
 
   const onFinish = async (values) => {
-    await uploadPhoto()
-      .then(function (res) {
-        values.bookedTimeSlots = [];
-        values.image = imageUrl;
-        imageUrl = "";
-        dispatch(addCar(values))
-          .then(function (response) {
-            message.success("New car added successfully!");
-            setTimeout(() => {
-              window.location.href = "/admin";
-            }, 500);
-          })
-          .catch(function (error) {
-            message.success("Something went wrong!");
-          });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      await uploadPhoto();
+      values.bookedTimeSlots = [];
+      values.image = imageUrl;
+      imageUrl = "";
+      dispatch(addCar(values));
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 500);
+    } catch (error) {
+      message.error("Something went wrong!");
+      console.log(error);
+    }
   };
 
   return (

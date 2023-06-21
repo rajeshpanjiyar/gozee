@@ -5,7 +5,7 @@ export const bookCar = (reqObj) => async (dispatch) => {
 
   try {
     await axios.post(
-      "http://localhost:4000/api/bookings/bookcar",
+      process.env.REACT_APP_BASE_URL + "/api/bookings/bookcar",
       reqObj
     );
 
@@ -26,9 +26,8 @@ export const getAllBookings = () => async (dispatch) => {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     const response = await axios.post(
-      "http://localhost:4000/api/bookings/getallbookings", {user: user}
+      process.env.REACT_APP_BASE_URL + "/api/bookings/getallbookings", {user: user}
     );
-    console.log('booking', response);
     dispatch({ type: "GET_ALL_BOOKINGS", payload: response.data });
     dispatch({ type: "LOADING", payload: false });
   } catch (error) {
@@ -41,7 +40,7 @@ export const markaspaid = (reqObj) => async (dispatch) => {
 
   try {
     await axios.post(
-      "http://localhost:4000/api/bookings/markaspaid",
+      process.env.REACT_APP_BASE_URL + "/api/bookings/markaspaid",
       reqObj
     );
 
