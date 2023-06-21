@@ -1,6 +1,10 @@
 # Gozee
 Get on the Go with GoZee, the affordable way to travel!
 
+The transport company is looking to automate its operations for managing its fleet of vehicles. The system will handle vehicle bookings, rental charges based on per-hour and per-kilometer rates, and maintenance expenses, and track vehicle statistics such as revenue earned, fuel consumption, and repair costs. 
+
+This information will help the company make informed decisions on fleet management, pricing, and profitability analysis.
+
 
 # Getting Started with Create React App
 
